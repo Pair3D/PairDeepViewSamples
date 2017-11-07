@@ -1,0 +1,2401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: DeepImageViewer</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: DeepImageViewer</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>DeepImageViewer</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+
+    <h4 class="name" id="DeepImageViewer"><span class="type-signature"></span>new DeepImageViewer<span class="signature">(viewerDomElementId)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    The viewer class that contains the logic for viewing a Pair deep image.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>viewerDomElementId</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The ID of the DOM element in which we'll create the visualizer. The visualizer will try to fit within this element as large as possible without overflow.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line18">line 18</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Examples</h5>
+    
+    <pre class="prettyprint"><code>// Create a visualizer using the built-in demo room image and camera datavar viewer = new pair.DeepImageViewer("visualizer-panel");viewer.initUsingDemo();</code></pre>
+
+    <pre class="prettyprint"><code>// var viewer = new pair.DeepImageViewer("visualizer-panel");viewer.init(deepImageCameraInfoFromServer);</code></pre>
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id=".TestDeepImageCameraInfo"><span class="type-signature">(static) </span>TestDeepImageCameraInfo<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    An example of the Pair deep image camera results returned from our API
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line100">line 100</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="activeLights"><span class="type-signature"></span>activeLights<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    The list of THREE.AmbientLight, THREE.PointLight, or THREE.DirectionalLight objects are active within the scene. Kept in a seperate list so we can quickly remove them from the scene to change lighting.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line24">line 24</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="bgImageElem"><span class="type-signature"></span>bgImageElem<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    The background DOM img element
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line91">line 91</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="camera"><span class="type-signature"></span>camera<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    The THREE.PerspectiveCamera object that manages perspective of the user. Ths gets set from the Pair Deep Image results so the scene's models line up with the background image.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line56">line 56</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="domContainer"><span class="type-signature"></span>domContainer<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    The DOM element in which our ThreeJS canvas and background image element are contained
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line39">line 39</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="enableRotateGesture"><span class="type-signature"></span>enableRotateGesture<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    A flag to indicate if we want to enable the 2-finger rotate gesture to rotate the selected model. This must be set prior to calling init().
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line45">line 45</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="groundPlaneMeshSize"><span class="type-signature"></span>groundPlaneMeshSize<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    The size, in meters, of the ground plane mesh used for intersection detection
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line53">line 53</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="helperBox"><span class="type-signature"></span>helperBox<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    The THREE.Mesh object used to indicate which model is selected
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line36">line 36</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="imageHeight"><span class="type-signature"></span>imageHeight<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    The background image height, in pixels
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line30">line 30</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="imageWidth"><span class="type-signature"></span>imageWidth<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    The background image width, in pixels
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line27">line 27</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="leftMouseIsDown"><span class="type-signature"></span>leftMouseIsDown<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Indicates if the mouse button or a finger is currently pressing on the visualizer. Used to enable dragging.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line33">line 33</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="onVisualizerReadyCallback"><span class="type-signature"></span>onVisualizerReadyCallback<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    An optional function that can be set to be invoked after background image is loaded and deep image camera data set. Ideally, this whould be an emitter similar to addEventListener, but we'll keep it simple.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line42">line 42</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="renderer"><span class="type-signature"></span>renderer<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    The THREE.WebGLRenderer object that handles displaying the scene to our browser
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line65">line 65</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="scene"><span class="type-signature"></span>scene<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    The ThreeJS scene object
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line82">line 82</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="sceneScalar"><span class="type-signature"></span>sceneScalar<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    The amount by which all models are scaled upon being added to the scene
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line59">line 59</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="selectedMesh"><span class="type-signature"></span>selectedMesh<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    The THREE.Object3D object that responds to input events like move and rotate
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line21">line 21</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="useContinuousRendering"><span class="type-signature"></span>useContinuousRendering<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    True to use a render loop to continuously re-render the scene. You'll want this for things like animation or transitions, but disabled for normal use as it eats up CPU and battery.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line68">line 68</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="useDefaultSwatchDisplay"><span class="type-signature"></span>useDefaultSwatchDisplay<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    True to use the built-in swatch display buttons, false to allow users to come up with their own swatch selection system
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line62">line 62</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="useFullFillOnResize"><span class="type-signature"></span>useFullFillOnResize<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    When set to true, the viewer will always try to fill the parent containing element with no blank space. The default, false, will cause the image to fill the view with no overflow.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line79">line 79</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="addCube"><span class="type-signature"></span>addCube<span class="signature">(onModelAddedCallback)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Add a half-meter cube to the scene
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>onModelAddedCallback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#modelAddedCallback">modelAddedCallback</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An optional callback that gets invoked after the cube is added to the scene.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line1203">line 1203</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="addModelFromBaseUri"><span class="type-signature"></span>addModelFromBaseUri<span class="signature">(baseUri, onModelAddedCallback)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Add a model to the scene via a root URI path. The passed-in path will have "model.obj" appended to find the model and "model.mtl" appended to find the optional material file.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>baseUri</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The root URI path to find the model files</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>onModelAddedCallback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="global.html#modelAddedCallback">modelAddedCallback</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">An optional callback that gets invoked after the model is loaded and added to the scene.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line1279">line 1279</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="createShadowPlaneForMesh"><span class="type-signature"></span>createShadowPlaneForMesh<span class="signature">(mesh)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Add a shadow underneath a mesh
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>mesh</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">THREE.Mesh</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The mesh under which we'll place a shadow</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line1229">line 1229</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getCameraGroundForward"><span class="type-signature"></span>getCameraGroundForward<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Get a normalized vector along the ground plane that represents camera right. Used for d-pad movement of models
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line544">line 544</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getCameraGroundRight"><span class="type-signature"></span>getCameraGroundRight<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Get a normalized vector along the ground plane that represents camera right. Used for d-pad movement of models
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line526">line 526</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="getCenteredPlacementPos"><span class="type-signature"></span>getCenteredPlacementPos<span class="signature">()</span><span class="type-signature"> &rarr; {THREE.Vector3}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Get a position on the ground plane in the center of the image so new models can be placed in front of the viewer.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line1169">line 1169</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    A point on the ground place that should be visible to the viewer
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">THREE.Vector3</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="init"><span class="type-signature"></span>init<span class="signature">(cameraData, roomImageDataUri)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Initialize the visualizer using deep image camera data and a room image.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>cameraData</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The camera data returned from the Pair deep image server API: https://app.pair3d.com/api/swagger/ui/index#!/Vision/Vision_FindDeepImageCameraFromPost</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>roomImageDataUri</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The base64-encoded-image string describing the background image</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line147">line 147</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="initUsingDemo"><span class="type-signature"></span>initUsingDemo<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Initialize the visualizer using a demonstration room image and camera data
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line557">line 557</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="render"><span class="type-signature"></span>render<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    If useContinuousRendering is false, use this to re-display the scene after the scene has been modified in some way
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="pair-deep-image-viewer.js.html">pair-deep-image-viewer.js</a>, <a href="pair-deep-image-viewer.js.html#line519">line 519</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="pair.DeepImageViewer.html">DeepImageViewer</a></li><li><a href="pair.Interstitial.html">Interstitial</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Mon Nov 06 2017 17:05:53 GMT-0600 (Central Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

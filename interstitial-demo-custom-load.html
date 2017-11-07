@@ -1,0 +1,68 @@
+<!doctype html>
+<html style="overflow-y: hidden;">
+
+<!-- Demonstrates how to show your own loading indicator for the interstitial viewer. Some HTML debuggers, like the one built into
+Chrome, offer network throttling. That can be a good way to get a better look at the loading progress. -->
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pair Deep Image Interstitial Demo with Custom Loader</title>
+
+    <link href="css/simple-visualizer-demo.css" rel="stylesheet" type="text/css" />
+
+    <style type="text/css">
+        #loading-label
+        {
+            display: inline-block;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 1500;
+        }
+    </style>
+</head>
+
+<body style="overflow-y: hidden;">    
+    <div id="visualizer-panel" style="width: 100%; height: 100%;">
+        <div id="loading-label"></div>
+    </div>
+
+    <script src="js/third-party/jquery-3.1.1.min.js"></script>
+    <script src="js/third-party/three.min.js"></script>
+    <script src="js/pair-deep-image.min.js"></script>
+
+    <script type="text/javascript">
+
+    // Initialize the interstitial viewer
+    var interstitialViewer = new pair.Interstitial("visualizer-panel");
+    interstitialViewer.init();
+
+    // Disable the default loading box so we can show our own loading progress
+    interstitialViewer.showLoadingBox = false;
+
+    // This gets called as the model is loaded, with a loadProgress of 0-1
+    var loadingLabelElem = document.getElementById("loading-label");
+    var onLoadProgress = function(loadProgress)
+    {
+        // Depending on the browsers and how it handles JS HTTP requests, this callback may be called
+        // multiple times with loadProgress=1, so bail out if we've already hidden our loading progress.
+        if( !loadingLabelElem )
+            return;
+        
+        loadingLabelElem.innerHTML = "Loaded: " + Math.floor( loadProgress * 100 ) + "%";
+
+        // This callback will be called with loadProgress=1 when loading is complete
+        if( loadProgress >= 1 )
+        {
+            loadingLabelElem.parentNode.removeChild(loadingLabelElem);
+            loadingLabelElem = null;
+        }
+    };
+
+    // Set the chair as the display model
+    var modelBaseUri = "https://paircatalog.blob.core.windows.net/pair-public-catalog/deep-image-demo-models/swatch-demo/";
+    interstitialViewer.setModelFromBaseUri(modelBaseUri, onLoadProgress);
+    </script>
+</body>
+
+</html>

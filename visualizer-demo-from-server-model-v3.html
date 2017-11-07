@@ -1,0 +1,215 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pair Deep Image Visualizer Demo</title>
+
+    <link href="css/simple-visualizer-demo.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div id="image-picker-panel">
+        Enter your Pair API Key: <input id="pair-api-key-input" style="width: 300px;" type="text"><br>
+        <br>
+        Then select an image of a room:<br>
+        <input type="file" onchange="onImageSelected(event)" />
+    </div>
+
+    <div id="interstitial-panel" style="width: 100%; height: 100%; display: none;">
+        <span id="processing-label" style="position: absolute; font-size: 2em; text-shadow: 0 0 8px white;">Processing Image...</span>
+
+        <div id="interstitial-viewer-panel" style="width: 100%; height: 100%;">
+        </div>
+
+        <button id="visualize-button" style="display: none; position: absolute; left: 10%; bottom: 10%; font-size: 2em;" onclick="onShowVisualizerClicked()" type="button">Visualize in Room</button>
+    </div>
+
+    <div id="visualizer-panel" style="width: 100%; height: 100%; display: none;">
+        <div id="visualizer-viewer-panel" style="width: 100%; height: 100%;">
+        </div>
+    </div>
+
+    <script src="js/third-party/jquery-3.1.1.min.js"></script>
+    <script src="js/third-party/three.min.js"></script>
+
+    <script src="js/third-party/PairFileLoader.js"></script>
+    <script src="js/third-party/PairOBJLoader.js"></script>
+    <script src="js/third-party/PairMTLLoader.js"></script>
+    <script src="js/third-party/pair-TrackballControls.js"></script>
+
+    <script src="js/pair-helpers.js"></script>
+    <script src="js/pair-deep-image-viewer.js"></script>
+    <script src="js/pair-interstitial.js"></script>
+
+      <!-- <script src="js/pair-deep-image.min.js"></script> -->
+
+    <script type="text/javascript">
+    // 1. Allow the user to select an image
+    // 2. Upload that image to the Pair server
+    // 3. While the server is processing show the interstitial
+    // 4. Once processing results are received, show button to enter visualizer
+    // 5. Show visualizer with selected image and camera info from server
+
+
+    // The data URI describing the image selected by the user
+    var backgroundImageData = null;
+
+    // The deep image scene information (camera pose + field of view) as returned after processing the user-submitted image
+    var serverSceneInfo = null;
+
+    var interstitialViewer = null;
+
+    var getQueryStringParameter = function( parameterName )
+    {
+        var fullQueryString = window.location.search.substring( 1 );
+        var params = fullQueryString.split( "&" );
+
+        var parameterValue = false;
+        for ( var paramIndex = 0; paramIndex < params.length; ++paramIndex )
+        {
+            var curParameterName = params[paramIndex].substring( 0, params[paramIndex].indexOf( '=' ) );
+
+            if ( curParameterName == parameterName )
+                parameterValue = params[paramIndex].substring( params[paramIndex].indexOf( '=' ) + 1 );
+        }
+
+        return parameterValue;
+    };
+
+
+    // Invoked when the Pair server responds with the deep image scene info
+    function onDeepImageSceneReady( sceneInfo ) {
+
+        var processingLabel = document.getElementById("processing-label");
+
+        if( !sceneInfo )
+        {
+            processingLabel.style.color = "#F00";
+            processingLabel.innerHTML = "Processing failed due to server error";
+            
+            return;
+        }
+
+        //console.log( JSON.stringify(sceneInfo) );
+
+        if( sceneInfo.errors && sceneInfo.errors.length > 0 )
+        {
+            var errorMessage = "Processing failed due to:<br>";
+            for( var i = 0; i < sceneInfo.errors.length; ++i )
+                errorMessage += "- " + sceneInfo.errors[i].errorMessage + "<br>";
+
+            processingLabel.style.color = "#F00";
+            processingLabel.innerHTML = errorMessage;
+
+            return;
+        }
+        
+        serverSceneInfo = sceneInfo;
+
+        processingLabel.style.display = "none";
+        document.getElementById("visualize-button").style.display = "block";
+    }
+
+    var modelBaseUri = "https://paircatalog.blob.core.windows.net/pair-public-catalog/deep-image-demo-models/swatch-demo/";
+    var openModelName = getQueryStringParameter("model");
+    if( openModelName )
+    {
+      modelBaseUri = "https://paircatalog.blob.core.windows.net/pair-public-catalog/test-web-models/" + openModelName + "/";
+    }
+
+
+    // Invoked when the user clicks the button to display the deep image scene
+    function onShowVisualizerClicked() {
+
+        // Hide the intersitital now that we're displaying the deep image
+        interstitialViewer.close();
+        interstitialViewer = null;
+
+        document.getElementById("interstitial-panel").style.display = "none";
+        document.getElementById("visualizer-panel").style.display = "block";
+
+        // Display the deep image viewer using the user-selected image and server-provided scene info
+        var deepImageViewer = new pair.DeepImageViewer("visualizer-viewer-panel");
+
+        // Hook up our handler so we can add a cube after the scene is ready
+        deepImageViewer.onVisualizerReadyCallback = function()
+        {
+            deepImageViewer.addModelFromBaseUri( modelBaseUri, function( model )
+            {
+                deepImageViewer.createShadowPlaneForMesh( model );
+            } );
+        };
+
+        deepImageViewer.init( serverSceneInfo, backgroundImageData );
+    }
+
+
+    // Parse the user-selected image from the <input> element into a data URI
+    function readImage (file) {
+
+        var reader = new FileReader();
+
+        // Once the image file is loaded, send it up to the server for processing and show our interstitial
+        reader.addEventListener("load", function () {
+
+            var image  = new Image();
+            image.addEventListener("load", function () {
+
+                // Hide the image picker and display the interstitial
+                document.getElementById("image-picker-panel").style.display = "none";
+
+                document.getElementById("interstitial-panel").style.display = "block";
+
+                interstitialViewer = new pair.Interstitial("interstitial-viewer-panel");
+                interstitialViewer.init();
+
+                interstitialViewer.setModelFromBaseUri(modelBaseUri);
+
+                backgroundImageData = image.src;
+
+                // Begin processing the scene
+                var pairApiKey = document.getElementById("pair-api-key-input").value;
+                window.localStorage["apiKey"] = pairApiKey;
+
+                pair.DeepImageApiUri = "https://app.pair3d.com/api/Vision/DeepImageCamera3";
+                //pair.DeepImageApiUri = "/api/Vision/DeepImageCamera3";
+                
+                var onUploadProgress = function( uploadPercent )
+                {
+                    if( uploadPercent < 1 )
+                    {
+                        var percentString = "Uploading image: " + Math.floor( uploadPercent * 100 ).toString() + "% complete";
+                        $("#processing-label").text( percentString );
+                    }
+                    else
+                    {
+                        $("#processing-label").text( "Processing image..." );
+                    }
+                };
+
+                pair.retrieveDeepImageScene( backgroundImageData, pairApiKey, onDeepImageSceneReady, onUploadProgress );
+            });
+
+            image.src = reader.result;
+
+        });
+
+        // https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL
+        reader.readAsDataURL(file);  
+    };
+
+
+    // Occurs when an image is selected
+    function onImageSelected(event)
+    {
+        readImage( event.currentTarget.files[0] );
+    }
+
+    if( window.localStorage["apiKey"])
+        document.getElementById("pair-api-key-input").value = window.localStorage["apiKey"];
+
+    </script>
+</body>
+
+</html>

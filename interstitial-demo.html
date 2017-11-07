@@ -1,0 +1,33 @@
+<!doctype html>
+<html style="overflow-y: hidden;">
+
+<!-- Demonstrates how to show the interstitial viewer, commonly used to mask the deep image processing time. -->
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pair Deep Image Interstitial Demo</title>
+    
+    <link href="css/simple-visualizer-demo.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body style="overflow-y: hidden;">    
+  <div id="visualizer-panel" style="width: 100%; height: 100%;">
+  </div>
+    
+  <script src="js/third-party/jquery-3.1.1.min.js"></script>
+  <script src="js/third-party/three.min.js"></script>
+  <script src="js/pair-deep-image.min.js"></script>
+
+  <script type="text/javascript">
+
+    // Initialize the interstitial viewer
+    var interstitialViewer = new pair.Interstitial("visualizer-panel");
+    interstitialViewer.init();
+
+    // Set the chair as the display model
+    var modelBaseUri = "https://paircatalog.blob.core.windows.net/pair-public-catalog/deep-image-demo-models/chair/";
+    interstitialViewer.setModelFromBaseUri(modelBaseUri);
+  </script>
+</body>
+
+</html>

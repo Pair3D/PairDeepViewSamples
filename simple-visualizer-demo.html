@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pair Deep Image Visualizer Demo</title>
+
+    <link href="css/simple-visualizer-demo.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>    
+    <div id="visualizer-panel" style="width: 100%; height: 100%;">
+    </div>
+
+    <script src="js/third-party/jquery-3.1.1.min.js"></script>
+    <script src="js/third-party/three.min.js"></script>
+    <script src="js/pair-deep-image.min.js"></script>
+
+    <script type="text/javascript">
+    // Create the viewer
+    var viewer = new pair.DeepImageViewer("visualizer-panel");
+
+    // Hook up our handler so we can add a cube after the scene is ready
+    viewer.onVisualizerReadyCallback = function()
+    {
+        // Add a moveable cube
+        viewer.addCube();
+    };
+
+    // Initialize using demonstration data
+    viewer.initUsingDemo();
+
+    </script>
+</body>
+
+</html>

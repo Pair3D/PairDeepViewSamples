@@ -1,0 +1,135 @@
+<!doctype html>
+<html style="overflow-y: hidden;">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pair Deep Image Visualizer Demo</title>
+    
+    <link href="css/simple-visualizer-demo.css" rel="stylesheet" type="text/css" />
+
+    <!-- Required, or simply copy the few CSS rules into your own CSS file -->
+    <link href="css/pair-deep-image.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body style="overflow-y: hidden;">    
+  <button id="toggle-view-button" onclick="onToggleView()" style="position: absolute;">Toggle View</button>
+  <div id="visualizer-panel" style="width: 100%; height: 100%; overflow: hidden; top: 20px; position: relative;">
+  </div>
+    
+  <script src="js/third-party/jquery-3.1.1.min.js"></script>
+  <script src="js/third-party/three.min.js"></script>
+
+
+  <script src="js/third-party/PairFileLoader.js"></script>
+  <script src="js/third-party/PairOBJLoader.js"></script>
+  <script src="js/third-party/PairMTLLoader.js"></script>
+  <script src="js/third-party/pair-TrackballControls.js"></script>
+  
+  <script src="js/pair-helpers.js"></script>
+  <script src="js/pair-deep-image-viewer.js"></script>
+  <script src="js/pair-interstitial.js"></script>
+
+  <!-- <script src="js/pair-deep-image.min.js"></script> -->
+
+
+  <script type="text/javascript">
+    var getQueryStringParameter = function( parameterName )
+    {
+        var fullQueryString = window.location.search.substring( 1 );
+        var params = fullQueryString.split( "&" );
+
+        var parameterValue = false;
+        for ( var paramIndex = 0; paramIndex < params.length; ++paramIndex )
+        {
+            var curParameterName = params[paramIndex].substring( 0, params[paramIndex].indexOf( '=' ) );
+
+            if ( curParameterName == parameterName )
+                parameterValue = params[paramIndex].substring( params[paramIndex].indexOf( '=' ) + 1 );
+        }
+
+        return parameterValue;
+    };
+
+    var openModelName = getQueryStringParameter("model");
+    
+    var modelUri = "https://paircatalog.blob.core.windows.net/pair-public-catalog/deep-image-demo-models/chair/"; var TestModelScale = 1;
+    //var modelUri = "https://paircatalog.blob.core.windows.net/pair-public-catalog/test-web-models/eames/"; var TestModelScale = 1;
+    //var modelUri = "https://paircatalog.blob.core.windows.net/pair-public-catalog/test-web-models/goomba/"; var TestModelScale = 0.0025;
+    //var modelUri = "https://paircatalog.blob.core.windows.net/pair-public-catalog/test-web-models/tank/"; var TestModelScale = 1;
+    //var modelUri = "https://paircatalog.blob.core.windows.net/pair-public-catalog/test-web-models/18809107-Pair/"; var TestModelScale = 0.0254;
+    // var modelUri = "https://paircatalog.blob.core.windows.net/pair-public-catalog/test-web-models/mat-test-1/"; var TestModelScale = 0.254;
+    
+    if( openModelName )
+    {
+      modelUri = "https://paircatalog.blob.core.windows.net/pair-public-catalog/test-web-models/" + openModelName + "/";
+      TestModelScale = 1;
+    }
+
+    var deepImageViewer = null;
+    var interstitialViewer = null;
+    var activeModel = null;
+
+
+    function setupInterstitial()
+    {
+      if( deepImageViewer )
+      {
+        deepImageViewer.close();
+        deepImageViewer = null;
+      }
+
+      interstitialViewer = new pair.Interstitial("visualizer-panel");
+      interstitialViewer.showLoadingBox = true;
+      interstitialViewer.init();
+
+      interstitialViewer.setModelFromBaseUri(modelUri);
+    }
+
+
+    function setupDeepImage()
+    {
+      if( interstitialViewer )
+      {
+        interstitialViewer.close();
+        interstitialViewer = null;
+      }
+
+      // Create the viewer
+      deepImageViewer = new pair.DeepImageViewer("visualizer-panel");
+      
+      // Hook up our handler so we can add a cube after the scene is ready
+      deepImageViewer.onVisualizerReadyCallback = function()
+      {
+          deepImageViewer.addModelFromBaseUri( modelUri, function(newMesh){
+
+            activeModel = newMesh;
+
+            deepImageViewer.createShadowPlaneForMesh( newMesh );
+
+            // The test model is too big
+            newMesh.scale.set( TestModelScale, TestModelScale, TestModelScale );
+          } );
+      };
+
+      // Initialize using demonstration data
+      deepImageViewer.initUsingDemo();
+    }
+
+
+    function onToggleView()
+    {
+      activeModel = null;
+
+      if( interstitialViewer )
+        setupDeepImage();
+      else
+        setupInterstitial();
+    }
+
+    setupInterstitial();
+    //setupDeepImage();
+    
+  </script>
+</body>
+
+</html>

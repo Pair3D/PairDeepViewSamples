@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pair Deep Image Visualizer Demo</title>
+    
+    <link href="css/simple-visualizer-demo.css" rel="stylesheet" type="text/css" />
+
+    <!-- Required, or simply copy the few CSS rules into your own CSS file -->
+    <link href="css/pair-deep-image.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>    
+  <div id="visualizer-panel" style="width: 100%; height: 100%;">
+  </div>
+    
+  <script src="js/third-party/jquery-3.1.1.min.js"></script>
+  <script src="js/third-party/three-r79.js"></script>
+  <script src="js/third-party/OBJLoader-r79.js"></script>
+  <script src="js/third-party/MTLLoader-r79.js"></script>
+  <script src="js/third-party/zingtouch.min.js"></script>
+
+  <!-- Required JS file -->
+  <script src="js/pair-helpers.js"></script>
+  <script src="js/pair-deep-image-viewer.js"></script>
+  <script type="text/javascript">
+    // Create the viewer
+    var viewer = new pair.DeepImageViewer("visualizer-panel");
+    
+    // Hook up our handler so we can add a cube after the scene is ready
+    viewer.onVisualizerReadyCallback = function()
+    {
+        var chairUri = "https://paircatalog.blob.core.windows.net/pair-public-catalog/test-web-models/eames/"; var TestModelScale = 0.023;
+        //var chairUri = "https://paircatalog.blob.core.windows.net/pair-public-catalog/test-web-models/goomba/"; var TestModelScale = 0.0025;
+        //var chairUri = "https://paircatalog.blob.core.windows.net/pair-public-catalog/test-web-models/tank/"; var TestModelScale = 1;
+        
+        viewer.addModelFromBaseUri( chairUri, function(newMesh){
+
+          // The test model is too big
+          newMesh.scale.set( TestModelScale, TestModelScale, TestModelScale );
+        } );
+
+        // Touch rotate doesn't seem to work, I'll revisit
+        // var activeRegion = ZingTouch.Region(viewer.domContainer);
+        // activeRegion.bind(viewer.domContainer, 'rotate', function(event){
+        //     viewer.rotateSelection(event.detail.distanceFromLast);
+        // });
+    };
+
+    // Initialize using demonstration data
+    viewer.initUsingDemo();
+    
+  </script>
+</body>
+
+</html>

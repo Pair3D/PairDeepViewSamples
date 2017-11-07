@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+
+<!-- Demonstrates how to move a model around via an alternate input. Potentially helpful for accessibility features. -->
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pair Deep Image Visualizer Demo</title>
+
+    <link href="css/simple-visualizer-demo.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>    
+    <div id="visualizer-panel" style="width: 100%; height: 100%;">
+    </div>
+
+    <div id="bg-panel" style="width: 100%; height: 100%;">
+    </div>
+
+    <script src="js/third-party/jquery-3.1.1.min.js"></script>
+    <script src="js/third-party/three-r79.js"></script>
+    <script src="js/pair-deep-image.min.js"></script>
+    <script src="js/third-party/nipplejs.min.js"></script>
+
+    <script type="text/javascript">
+    // Create the viewer
+    var deepImageViewer = new pair.DeepImageViewer("visualizer-panel");
+
+    // The visible model    
+    var activeModel = null;
+
+    // Indicates if the user is currently inputting to the joypad  
+    var touchIsActive = false;
+
+    // The direction in which the user is pushing the joypad
+    var joypadDir = {x:0, y:0};
+
+    // Hook up our handler so we can add a cube after the scene is ready
+    deepImageViewer.onVisualizerReadyCallback = function()
+    {
+        var modelBaseUri = "https://paircatalog.blob.core.windows.net/pair-public-catalog/deep-image-demo-models/chair/";
+
+        deepImageViewer.addModelFromBaseUri( modelBaseUri, function(newMesh){
+
+            deepImageViewer.createShadowPlaneForMesh( newMesh );
+            
+            activeModel = newMesh;
+        } );
+    };
+
+
+    // Create the joypad
+    var joypad = nipplejs.create({
+        zone: document.getElementById("bg-panel"),
+        mode: "static",
+        position: {left: '10%', bottom: '10%'},
+        color: 'red'
+    });
+
+    // Respond to joypad events
+    joypad.on('start', function (evt) {
+        touchIsActive = true;
+    }).on('end', function (evt, nipple) {
+        touchIsActive = false;
+    }).on('move', function (evt, nipple) {
+
+        joypadDir.x = Math.cos( nipple.angle.radian );
+        joypadDir.y = Math.sin( nipple.angle.radian );
+    });
+
+    var updateModelFromJoypad = function(){
+
+        // If the user isn't touching the screen or we don't have a model, bail out since we can't move anything
+        if( !touchIsActive || !activeModel )
+            return;
+
+        var MoveScalar = 0.035;
+        var moveAmount = { x: joypadDir.x * MoveScalar, y: joypadDir.y * MoveScalar };
+
+        var cameraGroundRight = deepImageViewer.getCameraGroundRight();
+        var cameraGroundForward = deepImageViewer.getCameraGroundForward();
+
+        activeModel.position.addScaledVector( cameraGroundRight, moveAmount.x );
+        activeModel.position.addScaledVector( cameraGroundForward, moveAmount.y );
+
+        deepImageViewer.render();
+    };
+
+    // Update the model based on the joypad input
+    setInterval(updateModelFromJoypad, 1/30 * 1000);
+
+    // Initialize using demonstration data
+    deepImageViewer.initUsingDemo();
+
+    </script>
+</body>
+
+</html>

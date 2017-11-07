@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+
+<!-- Shows how to add a model to the deep image viewer and place a shadow under it -->
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pair Deep Image Visualizer Demo</title>
+
+    <link href="css/simple-visualizer-demo.css" rel="stylesheet" type="text/css" />
+
+    <style type="text/css">
+        .swatch-button
+        {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%; /* Make them circle because it's fun. So much fun. */
+        }
+
+        .swatch-button.selected-loaded
+        {
+            padding: 0;
+            border: solid 5px #0FA;
+        }
+
+        .swatch-button.selected-loading
+        {
+            padding: 0;
+            border: solid 5px #AAA;
+        }
+
+        .swatch-button.unselected
+        {
+            padding: 5px;
+            border: none;            
+        }
+    </style>
+</head>
+
+<body>    
+    <div id="visualizer-panel" style="width: 100%; height: 80%;">
+    </div>
+
+    <div id="swatch-button-panel" style="width: 100%; height: 20%;">
+        <img id="swatch-button-0" class="swatch-button" src="https://paircatalog.blob.core.windows.net/pair-public-catalog/deep-image-demo-models/named-swatch-demo/swatchThumb_0.jpg" onclick="activeModel.setSwatchByName('17434375')" />
+        <img id="swatch-button-0" class="swatch-button" src="https://paircatalog.blob.core.windows.net/pair-public-catalog/deep-image-demo-models/named-swatch-demo/swatchThumb_1.jpg" onclick="activeModel.setSwatchByName('17434377')" />
+        <img id="swatch-button-0" class="swatch-button" src="https://paircatalog.blob.core.windows.net/pair-public-catalog/deep-image-demo-models/named-swatch-demo/swatchThumb_2.jpg" onclick="activeModel.setSwatchByName('18809107')" />
+    </div>
+
+    <script src="js/third-party/jquery-3.1.1.min.js"></script>
+    <script src="js/third-party/three.min.js"></script>
+
+    <script src="js/third-party/PairFileLoader.js"></script>
+    <script src="js/third-party/PairOBJLoader.js"></script>
+    <script src="js/third-party/PairMTLLoader.js"></script>
+    <script src="js/third-party/pair-TrackballControls.js"></script>
+
+    <script src="js/pair-helpers.js"></script>
+    <script src="js/pair-deep-image-viewer.js"></script>
+    <script src="js/pair-interstitial.js"></script>
+
+    <!-- <script src="js/pair-deep-image.min.js"></script> -->
+
+    <script type="text/javascript">
+    // Create the viewer
+    var deepImageViewer = new pair.DeepImageViewer("visualizer-panel");
+
+    // Disable the built-in swatch UI
+    deepImageViewer.useDefaultSwatchDisplay = false;
+
+    var swatchContainerElem = document.getElementById("swatch-button-panel");
+
+    var activeModel = null;
+
+    // The key parts of information for generating a color swatch UI
+    // swatchOptions.length - The number of swatch options
+    // swatchOption.thumbnailFileName - The file name of the image that can be used for the thumbnail, prepend with the modelBaseUri
+
+
+    // Hook up our handler so we can add a model after the scene is ready
+    deepImageViewer.onVisualizerReadyCallback = function()
+    {
+        var modelBaseUri = "https://paircatalog.blob.core.windows.net/pair-public-catalog/deep-image-demo-models/named-swatch-demo/";
+
+        var onModelAdded = function( model )
+        {
+            activeModel = model;
+
+            deepImageViewer.createShadowPlaneForMesh( model );
+        };
+
+        deepImageViewer.addModelFromBaseUri( modelBaseUri, onModelAdded );
+    };
+
+    // Initialize using built-in demonstration scene data
+    deepImageViewer.initUsingDemo();
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,13 @@
+.pair-bg-image {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: auto;
+    z-index: 1100;
+}
+
+canvas.pair-deep-image-canvas {
+    z-index: 1200;
+    position: absolute;
+}
