@@ -1,13 +1,88 @@
-<html>
-<body>
-	<div style="width: 800px; border-left: 1px solid black; border-right: 1px solid black; margin: 0 auto; text-align: center;">
-	<h1>This is a demo product page</h1>
-	<div style="border: 2px solid #EEE; width: 200px; height: 200px; margin: 0 auto;">
-		<img src="img/demo-chair.jpg" style="width: 100%; height: auto;">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+<link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,700" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel='stylesheet' type='text/css' href='css/styles-product-page.css' media='all' />
+<title>Product</title>
+</head>
+
+<body >
+
+	<div id='container'>
+
+		<div id='header'>
+			<div id='logo'></div>
+			<div id='logo_copy'>PAIR</div>
+			<a class="btn header_btn menu_big"><i class="material-icons right">person</i>sign in</a>
+			<a class="btn header_btn menu_big"><i class="material-icons right">store</i>find a store</a>
+			<a class="btn header_btn menu_big"><i class="material-icons right">email</i>contact</a>
+			<a class="btn header_btn" ><i class="material-icons right" id='menu'>menu</i></a>
+		</div>
+
+		<div id='navigation'>
+			<div id='navigation_shell'>
+				<div class='nav_btn nav_btn_unselected'>Living Rooms</div>
+				<div class='nav_btn nav_btn_selected'>Dining Rooms</div>
+				<div class='nav_btn nav_btn_unselected'>Bedrooms</div>
+				<div class='nav_btn nav_btn_unselected'>Office</div>
+				<div class='nav_btn nav_btn_unselected'>Kids</div>
+				<div class='nav_btn nav_btn_unselected'>Decor</div>
+			</div>
+		</div>
+
+		<div id='product'>
+			<div id='product_header'>PAIR Microfiber Dining Chair</div>
+			<div id='product_sub_header'>Blue Ocean Series</div>
+			<div id='product_image'>
+				<img src='img/demo-chair.jpg'/>
+			</div>
+			<div id='product_copy_container'>
+				<div id='product_copy'>This stylish and beautifully hand woven chair is made with soft to the touch micro fiber fabric. Sit back, relax, and 'chair-ish' the moment as you will never sit in a more comfortable chair.</div>
+				<div id='product_copy_details'>Seat Depth: 17"<br>Seat Height: 20"<br>Weight: 19 lbs.<br>Maximum Weight Capacity: 500 lbs.</div>
+				<a href='walkthrough.html'><div id='product_view_btn'>see it in your space</div></a>
+			</div>
+			<div id='product_line'></div>
+			<div id='product_specs'>SKU: 793740862</div>
+			<div id='product_stars'>
+				<div id='product_stars_container'>
+					<i class="material-icons product_star">star</i>
+					<i class="material-icons product_star">star</i>
+					<i class="material-icons product_star">star</i>
+					<i class="material-icons product_star">star</i>
+					<i class="material-icons product_star">star</i>
+				</div>
+				<div id='product_review'><div id='product_review_num'>(14)</div>Reviews</div>
+			</div>
+		</div>
+
+		<div id='details'>
+			<div id='details_shell'>
+				<div class='details_btn details_btn_unselected'>Features</div>
+				<div class='details_btn details_btn_unselected'>Shipping</div>
+				<div class='details_btn details_btn_selected'>Warranty</div>
+				<div class='details_btn details_btn_unselected'>Care</div>
+				<div class='details_btn details_btn_unselected'>Reviews</div>
+			</div>
+			<div id='details_copy_container'>
+				<div id='details_copy'>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+					<br><br>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+	Lorem ipsum dolor sit amet, cons ectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
+	<br><br>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+	Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euis</div>
+			</div>
+		</div>
+
+		<div class="push"></div>
+
 	</div>
-	<br>
-	<br>
-	<br>
-	<a href="walkthrough.html" style="width: 400px; height: 80px; background-color: red; border-radius: 5px; display: inline-block; font-size: 2em; text-decoration: none; color: white;">see in your space</a>
+
+	<div id='footer'>
+		<div id='footer_shell'>&copy; Pair Inc. 2017</div>
+	</div>
+
 </body>
 </html>

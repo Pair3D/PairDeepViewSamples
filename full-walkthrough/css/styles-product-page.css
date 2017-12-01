@@ -1,0 +1,490 @@
+
+
+/*
+    AQUA: #239AA1
+    ORANGE: rgb(235, 196, 137)
+*/
+
+
+/* --------------------- GENERAL --------------------- */
+html, body{
+    padding:0;
+    margin:0;
+    height: 100%;
+    width: 100%;
+}
+
+#container{
+    width:100%;
+    height:auto;
+    min-height: 100%;
+    margin-bottom: -60px;
+    top:0px;
+    left:0px;
+    position: relative;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+.btn{
+    background-color: initial !important;
+    box-shadow:initial !important;
+    text-transform: initial !important
+}
+
+i.right {
+    margin-left: 5px !important
+}
+
+/* --------------------- HEADER --------------------- */
+
+#header{
+    width:100%;
+    max-width: 900px;
+    height:100px;
+    margin:0 auto;
+    position: relative;
+}
+
+#logo{
+    width:50px;
+    height:100px;
+    left:0px;
+    top:0px;
+    margin-left:20px;
+    margin-right:10px;
+    position: relative;
+    float: left;
+    background-image:url('../img/pair.png');
+    background-size: 70px 70px;
+    background-position: 50%;
+    background-repeat: no-repeat;
+
+}
+
+#logo_copy{
+    width:50px;
+    height:100px;
+    left:0px;
+    top:0px;
+    position: relative;
+    float: left;
+
+    font-family:Montserrat;
+    font-weight: 200;
+    font-size: 40px;
+    color:#239AA1;
+    line-height: 100px;
+    padding:0px;
+}
+
+.header_btn{
+    width:auto;
+    height:100px;
+    position: relative;
+    float: right;
+    font-family:Montserrat;
+    font-weight: 300;
+    font-size: 14px;
+    color:#333;
+    line-height: 100px;
+    padding:0px 20px;
+    cursor: pointer;
+}
+
+.header_btn:hover{
+    color:#666;
+}
+
+#menu{
+    display:none;
+    font-size: 30px;
+}
+
+/* --------------------- NAVIGATION --------------------- */
+
+#navigation{
+    width:100%;
+    height:80px;
+    position: relative;
+    background-color:#eee;
+}
+
+#navigation_shell{
+    width:100%;
+    max-width: 900px;
+    height:100%;
+    margin:0 auto;
+    position: relative;
+    display: flex;
+}
+
+.nav_btn{
+    width:auto;
+    flex-grow: 1;
+    text-align: center;
+    line-height: 80px;
+
+    font-family:Montserrat;
+    font-weight: 300;
+    font-size: 14px;
+    color:#239AA1;
+    cursor: pointer;
+}
+
+.nav_btn:hover {
+    color:#333;
+}
+
+.nav_btn_selected{
+    font-weight: 300;
+    color:#333;
+}
+
+/* --------------------- PRODUCT --------------------- */
+
+#product{
+    width:calc(100% - 40px);
+    max-width: 900px;
+    height:auto;
+    margin:0 auto;
+    position: relative;
+    padding:30px 20px;
+}
+
+#product_header{
+    width:100%;
+    height: auto;
+
+    font-family:Montserrat;
+    font-weight: 200;
+    font-size: 40px;
+    color:#239AA1;
+}
+
+#product_sub_header{
+    width:100%;
+    height: auto;
+
+    font-family:Montserrat;
+    font-weight: 200;
+    font-size: 30px;
+    color:#333;
+}
+
+#product_image{
+    width:60%;
+    padding-top:60px;
+    padding-bottom:30px;
+
+    position: relative;
+    float: left;
+    text-align: center;
+}
+
+#product_copy_container{
+    width:40%;
+    padding-top:60px;
+    padding-bottom:30px;
+
+    position: relative;
+    float: left;
+}
+
+#product_copy{
+    position: relative;
+    float: left;
+    margin-bottom:30px;
+
+    font-family:Montserrat;
+    font-weight: 200;
+    font-size: 16px;
+    color:#333;
+}
+
+#product_copy_details{
+    position: relative;
+    float: left;
+    margin-bottom:30px;
+
+    font-family:Montserrat;
+    font-weight: 200;
+    font-size: 16px;
+    color:#333;
+}
+
+img{
+    width:300px;
+    position: relative;
+}
+
+#product_view_btn{
+    width:100%;
+    height:60px;
+    position: relative;
+    float: left;
+    background-color: #fbb03b;
+    margin:0 auto;
+    border-radius: 3px;
+
+    font-family:Montserrat;
+    font-weight: 300;
+    font-size: 20px;
+    color:#fff;
+    text-align: center;
+    line-height: 60px;
+}
+
+#product_view_btn:hover{
+    background-color: #eee;
+    color:#239AA1;
+}
+
+#product_line{
+    width:100%;
+    height: 1px;
+    position: relative;
+    float: left;
+    background-color:#ccc;
+    margin-top:30px;
+    margin-bottom:20px;
+}
+
+#product_specs{
+    width:50%;
+    height: 50px;
+    position: relative;
+    float: left;
+
+    font-family: Montserrat;
+    line-height: 20px;
+    font-weight: 300;
+    font-size: 14px;
+    color: #333;
+}
+
+#product_stars{
+    width:50%;
+    height: 50px;
+    position: relative;
+    float: left;
+}
+
+#product_stars_container{
+    width:100%;
+    float:right;
+}
+
+.product_star{
+    position: relative;
+    float:right;
+    color:#fbb03b;
+}
+
+#product_review{
+    float:right;
+
+    font-family: Montserrat;
+    line-height: 20px;
+    font-weight: 300;
+    font-size: 14px;
+    color: #333;
+}
+
+#product_review_num{
+    width: auto;
+    position: relative;
+    float: left;
+    margin-right: 5px;
+
+    font-family: Montserrat;
+    line-height: 20px;
+    font-weight: 300;
+    font-size: 14px;
+    color: #239AA1;
+}
+
+/* --------------------- DETAILS --------------------- */
+
+#details{
+    width:100%;
+    height:auto;
+    margin-top:20px;
+    position: relative;
+    float: left;
+    background-color:#eee;
+}
+
+#details_shell{
+    width:100%;
+    max-width: 900px;
+    height:100%;
+    margin:0 auto;
+    position: relative;
+    display: flex;
+}
+
+.details_btn{
+    width:auto;
+    flex-grow: 1;
+    text-align: center;
+    line-height: 80px;
+
+    font-family:Montserrat;
+    font-weight: 200;
+    font-size: 20px;
+    color:#239AA1;
+    cursor: pointer;
+}
+
+.details_btn:hover {
+    color:#333;
+}
+
+.details_btn_selected{
+    font-weight: 300;
+    color:#333;
+}
+
+#details_copy_container{
+    width:100%;
+    max-width: 900px;
+    height:100%;
+    margin:0 auto;
+}
+
+#details_copy{
+    position: relative;
+    margin:20px 100px;
+
+    font-family: helvetica, arial;
+    line-height: 32px;
+    font-weight: 300;
+    font-size: 14px;
+    color: #666;
+}
+
+/* --------------------- FOOTER --------------------- */
+
+.push{
+    height: 60px;
+}
+
+#footer{
+    width:100%;
+    height:60px;
+    position: relative;
+    float: left;
+    background-color:#333;
+}
+
+#footer_shell{
+    width:100%;
+    max-width: 900px;
+    height:60px;
+    margin:0 auto;
+    position: relative;
+
+    font-family:Montserrat;
+    font-weight: 200;
+    font-size: 14px;
+    text-align: center;
+    color:#fff;
+    line-height: 60px;
+}
+
+@media only screen and (max-width: 600px) {
+
+    #header{
+        height:60px;
+    }
+
+    #logo{
+        width: 50px;
+        height: 60px;
+        margin-left: 10px;
+        margin-right: 0px;
+        background-size: 50px 50px;
+    }
+
+    #logo_copy{
+        height: 60px;
+        font-size: 30px;
+        line-height: 60px;
+    }
+
+    .header_btn{
+        line-height: 60px;
+    }
+
+    #navigation{
+        height: 60px;
+    }
+
+    #navigation_shell{
+        position: absolute;
+    }
+
+    #menu{
+        display:block;
+    }
+
+    .menu_big{
+        display: none;
+    }
+
+    .nav_btn{
+        line-height: 60px;
+    }
+
+    .nav_btn_unselected{
+        display: none;
+    }
+
+    .nav_btn_selected{
+        font-size: 20px;
+    }
+
+    #product{
+        padding: 30px 0px;
+    }
+
+    #product_header{
+        font-size: 30px;
+        line-height: 34px;
+        text-align: center;
+    }
+
+    #product_sub_header{
+        font-size: 20px;
+        line-height: 24px;
+        margin-top: 5px;
+        text-align: center;
+    }
+
+    #product_image{
+        width:100%;
+        padding-top: 30px;
+    }
+
+    #product_copy_container{
+        padding-top: 30px;
+        width:100%;
+    }
+
+    img{
+        width:200px;
+    }
+
+    .details_btn_unselected{
+        display: none;
+    }
+
+    #details_copy{
+        margin: 0px 20px 20px 20px;
+        line-height: 28px;
+        font-size: 14px;
+    }
+}

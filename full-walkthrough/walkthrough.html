@@ -3,352 +3,80 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Pair Deep Image Visualizer Demo</title>
-    <script type="text/javascript">
-        // Set your API key here
-        var PairApiKey = "SET KEY HERE";
-    </script>
-    <style type="text/css">
-    html, body
-    {
-        font-family: arial;
-        padding: 0;
-        margin: 0;
-        overflow-x: hidden;
-        overflow-y: scroll;
-        height: 100%;
-        width: 100%;
-    }
-
-    #take-photo-file
-    {
-        width: 0.1px;
-        height: 0.1px;
-        opacity: 0;
-        overflow: hidden;
-        position: absolute;
-        z-index: -1;
-    }
-
-    #header-panel
-    {
-        color: white;
-        background-color: gray;
-        width: 100%;
-        height: 30px;
-        line-height: 30px;
-        padding: 5px;
-    }
-
-    #header-panel a
-    {
-        color: white;
-        text-decoration: none;
-    }
-
-    #progress-bar-container
-    {
-        width: 80%;
-        background-color: #888;
-        margin: 7px auto;
-    }
-
-    #progress-bar
-    {
-        width: 1%;
-        background-color: #1C1;
-        height: 4px;
-    }
-
-    .big-button
-    {
-        width: 80%;
-        height: 60px;
-        margin: 0 auto;
-        background-color: red;
-        border-radius: 5px;
-        display: block;
-        font-size: 2em;
-        text-align: center;
-        color: white;
-        line-height: 60px;
-        cursor: pointer;
-    }
-
-    #interstitial-viewer-panel
-    {
-        background-color: #ddd;
-        background-size: 10px 10px;
-        background-image: linear-gradient(to right, #eee 1px, transparent 1px), linear-gradient(to bottom, #eee 1px, transparent 1px);
-    }
-    </style>
-</head>
-
-<body>
-    <div id="header-panel">
-        <a href="product-page.html">&lt; back to product</a>
-    </div>
-
-
-    <!-- Panel showing the initial instructions on how to take a picture -->
-    <div id="image-picker-panel">        
-        <img style="width: 100%; height: auto;" src="img/step1.jpg" />
-        <p style="padding-left: 10px; padding-right: 10px;">
-            <b>take a photo of your space and we'll show you how this item would look in it.</b>
-            <ul>
-                <li>Make sure the floor and wall are visible.</li>
-                <li>Turn on some lights! Brighter is better.</li>
-                <li>Include the surrounding furniture &amp; decor.</li>
-            </ul>
-
-            <input id="take-photo-file" type="file" onchange="onImageSelected(event)" />
-            <label for="take-photo-file" class="big-button">take photo</label>
-        </p>
-    </div>
-
-
-    <!-- Panel showing the interstitial and processing progress -->
-    <div id="interstitial-panel" style="display: none;">
-        <span id="processing-label" style="position: absolute; font-size: 2em; text-shadow: 0 0 8px white;"></span>
-
-        <div id="interstitial-viewer-panel" style="width: 100%; height: 50vh;">
-        </div>
-        <div id="progress-bar-container"><div id="progress-bar"></div></div>
-        <button id="visualize-button" class="big-button" disabled="disabled" style="background-color: #AAA; font-size: 1.25em;" onclick="onShowVisualizerClicked()" type="button">processing image...</button>
-
-        <p id="how-works-tips" style="padding-left: 10px; padding-right: 10px;">
-            <b>how this works</b>
-            <ul>
-                <li>Drag the item to adjust its position.</li>
-                <li>Twist the item with two fingers to rotate it.</li>
-            </ul>
-        </p>
-    </div>
-
-
-    <!-- Panel showing the Deep View scene -->
-    <div id="visualizer-panel" style="width: 100%; height: 100%; display: none;">
-        <div id="visualizer-viewer-panel" style="width: 100%; height: 100%;">
-        </div>
-    </div>
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:200,300,400,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel='stylesheet' type='text/css' href='css/styles-walkthrough.css' media='all' />
+    <script src="js/main.js"></script>
     <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/three.min.js"></script>
     <script src="js/pair-deep-image.min.js"></script>
+    <title>Pair Deep Image Visualizer Demo</title>
+</head>
 
-    <script type="text/javascript">
-    // 1. Allow the user to select an image
-    // 2. Upload that image to the Pair server
-    // 3. While the server is processing show the interstitial
-    // 4. Once processing results are received, show button to enter visualizer
-    // 5. Show visualizer with selected image and camera info from server
+<body>
 
+    <div id='container'>
 
-    // The data URI describing the image selected by the user
-    var backgroundImageData = null;
+        <div id='header'>
+            <div id='logo'></div>
+            <div id='logo_copy'>PAIR</div>
+            <a class="btn header_btn menu_big"><i class="material-icons right">person</i>sign in</a>
+            <a class="btn header_btn menu_big"><i class="material-icons right">store</i>find a store</a>
+            <a class="btn header_btn menu_big"><i class="material-icons right">email</i>contact</a>
+            <a class="btn header_btn" ><i class="material-icons right" id='menu'>menu</i></a>
+        </div>
 
-    // The deep image scene information (camera pose + field of view) as returned after processing the user-submitted image
-    var serverSceneInfo = null;
+        <div id='navigation'>
+			<div id='navigation_shell'>
+				<a href='product-page.html' class="btn header_btn_back"><i class="material-icons left">keyboard_arrow_left</i>back to product</a>
+			</div>
+		</div>
 
-    var interstitialViewer = null;
+        <!-- Panel showing the initial instructions on how to take a picture -->
+        <div id="image-picker-panel">
+            <div id='image-picker-image'>
+                <div id='instructions_copy'>Take a photo of your space and we'll show you how this item would look in it.</div>
+            </div>
+            <img id='step1_image' src="img/step1.jpg" />
+            <div id='instructions'>
+                <div class='instructions_tip'>Helpful Tips</div>
+                <div class='instructions_sub_copy'>Make sure the floor and wall are visible.</div>
+                <div class='instructions_sub_copy'>Turn on some lights! Brighter is better.</div>
+                <div class='instructions_sub_copy'>Include the surrounding furniture &amp; decor.</div>
+                <input id="take-photo-file" type="file" onchange="onImageSelected(event)" />
+                <label for="take-photo-file" id='product_view_btn'>take photo</label>
+            </div>
+        </div>
 
-    // The ID of the interval to show image processing progress
-    var progressBarIntervalId;
+        <!-- Panel showing the interstitial and processing progress -->
+        <div id="interstitial-panel" style="display: none;">
+            <span id="processing-label"></span>
+            <div id="interstitial-viewer-panel" style="width: 100%; height: 30vh;"></div>
+            <div id="progress-bar-container">
+                <div id="progress-bar"></div>
+            </div>
+            <button id="visualize-button" class="big-button disable_me" disabled="disabled" onclick="onShowVisualizerClicked()" type="button">processing image...</button>
+            <div id='tips'>
+                <div id="how-works-tips">How this works:</div>
+                <div class='how-works-tip'>Drag the item to adjust its position.</div>
+                <div class='how-works-tip'>Twist the item with two fingers to rotate it.</div>
+                </div>
+            </div>
 
-    var ModelBaseUri = "https://paircatalog.blob.core.windows.net/pair-public-catalog/deep-image-demo-models/chair/";
+        <!-- Panel showing the Deep View scene -->
+        <div id="visualizer-panel">
+            <div id="visualizer-viewer-panel"></div>
+        </div>
 
-    var getQueryStringParameter = function( parameterName )
-    {
-        var fullQueryString = window.location.search.substring( 1 );
-        var params = fullQueryString.split( "&" );
+        <div class="push"></div>
 
-        var parameterValue = false;
-        for ( var paramIndex = 0; paramIndex < params.length; ++paramIndex )
-        {
-            var curParameterName = params[paramIndex].substring( 0, params[paramIndex].indexOf( '=' ) );
+    </div>
 
-            if ( curParameterName == parameterName )
-                parameterValue = params[paramIndex].substring( params[paramIndex].indexOf( '=' ) + 1 );
-        }
+    <div id='footer'>
+        <div id='footer_shell'>&copy; Pair Inc. 2017</div>
+    </div>
 
-        return parameterValue;
-    };
-
-
-    // Invoked when the Pair server responds with the deep image scene info
-    function onDeepImageSceneReady( sceneInfo ) {
-
-        var processingLabel = document.getElementById("processing-label");
-
-        var visualizeButton = document.getElementById("visualize-button");
-
-        if( !sceneInfo )
-        {
-            processingLabel.style.color = "#F00";
-            processingLabel.innerHTML = "Processing failed due to server error";
-            
-            visualizeButton.disabled = null;
-            visualizeButton.style.backgroundColor = "red";
-            visualizeButton.innerHTML = "use a different image";
-
-            progressBarComplete( false );
-
-            return;
-        }
-
-        if( sceneInfo.errors && sceneInfo.errors.length > 0 )
-        {
-            var errorMessage = "Processing failed due to:<br>";
-            for( var i = 0; i < sceneInfo.errors.length; ++i )
-                errorMessage += "- " + sceneInfo.errors[i].errorMessage + "<br>";
-
-            processingLabel.style.color = "#F00";
-            processingLabel.innerHTML = errorMessage;
-
-            progressBarComplete( false );
-            
-            return;
-        }
-        
-        serverSceneInfo = sceneInfo;
-
-        progressBarComplete( true );
-            
-        processingLabel.style.display = "none";
-        visualizeButton.disabled = null;
-        visualizeButton.style.backgroundColor = "green";
-        visualizeButton.innerHTML = "configure in your space";
-    }
-
-    // Invoked when the user clicks the button to display the deep image scene
-    function onShowVisualizerClicked() {
-
-        if( !serverSceneInfo )
-        {
-            window.location.reload();
-            return;
-        }
-
-        // Hide the intersitital now that we're displaying the deep image
-        interstitialViewer.close();
-        interstitialViewer = null;
-
-        document.getElementById("interstitial-panel").style.display = "none";
-        document.getElementById("visualizer-panel").style.display = "block";
-
-        // Display the deep image viewer using the user-selected image and server-provided scene info
-        var deepImageViewer = new pair.DeepImageViewer("visualizer-viewer-panel");
-
-        // Hook up our handler so we can add a cube after the scene is ready
-        deepImageViewer.onVisualizerReadyCallback = function()
-        {
-            deepImageViewer.addModelFromBaseUri( ModelBaseUri, function( model )
-            {
-                deepImageViewer.createShadowPlaneForMesh( model );
-            } );
-        };
-
-        deepImageViewer.init( serverSceneInfo, backgroundImageData );
-    }
-
-
-    // Parse the user-selected image from the <input> element into a data URI
-    function readImage (file) {
-
-        var reader = new FileReader();
-
-        // Once the image file is loaded, send it up to the server for processing and show our interstitial
-        reader.addEventListener("load", function () {
-
-            var image  = new Image();
-            image.addEventListener("load", function () {
-
-                // Hide the image picker and display the interstitial
-                document.getElementById("image-picker-panel").style.display = "none";
-
-                document.getElementById("interstitial-panel").style.display = "block";
-
-                interstitialViewer = new pair.Interstitial("interstitial-viewer-panel");
-                interstitialViewer.init();
-                interstitialViewer.setModelFromBaseUri(ModelBaseUri);
-
-                backgroundImageData = image.src;
-
-                var onUploadProgress = function( uploadPercent )
-                {
-                    if( uploadPercent < 1 )
-                    {
-                        var percentString = "Uploading image: " + Math.floor( uploadPercent * 100 ).toString() + "% complete";
-                        $("#processing-label").text( percentString );
-                    }
-                    else
-                    {
-                        $("#processing-label").text( "Processing image..." );
-                        progressBarStart();
-                    }
-                };
-
-                pair.retrieveDeepImageScene( backgroundImageData, PairApiKey, onDeepImageSceneReady, onUploadProgress );
-            });
-
-            image.src = reader.result;
-
-        });
-
-        // https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL
-        reader.readAsDataURL(file);  
-    };
-
-
-    function progressBarStart()
-    {
-        var TotalTimeMillis = 15 * 1000;
-        var StepSpeed = 33;
-        var elapsedMillis = 0;
-
-        var progressBarElem = document.getElementById("progress-bar"); 
-        var width = 1;
-
-        progressBarIntervalId = setInterval(progressBarTick, StepSpeed);
-        
-        function progressBarTick()
-        {
-            // Ideally we'd use actual clock time, but since this bar isn't important we can cheat
-            elapsedMillis += StepSpeed;
-
-            if (elapsedMillis >= TotalTimeMillis)
-            {
-                clearInterval(progressBarIntervalId);
-                progressBarIntervalId = null;
-            }
-            else
-            {
-                var progressPercent = elapsedMillis * 90 / TotalTimeMillis; // Use 90 instead of 100 so the user doesn't get AS confused proccessing isn't done
-                progressBarElem.style.width = progressPercent.toFixed(2).toString() + "%";
-            }
-        }
-    }
-
-    function progressBarComplete(wasSuccessful)
-    {
-        clearInterval(progressBarIntervalId);
-        progressBarIntervalId = null;
-
-        var progressBarElem = document.getElementById("progress-bar"); 
-
-        if( wasSuccessful )
-            progressBarElem.style.width = "100%";
-        else
-            progressBarElem.style.backgroundColor = "red";
-    }
-
-    // Occurs when an image is selected
-    function onImageSelected(event)
-    {
-        readImage( event.currentTarget.files[0] );
-    }
-
-    </script>
 </body>
 
 </html>
