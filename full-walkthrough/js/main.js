@@ -20,7 +20,6 @@ var interstitialViewer = null;
 // The ID of the interval to show image processing progress
 var progressBarIntervalId;
 
-var ModelBaseUri = "https://paircatalog.blob.core.windows.net/pair-public-catalog/deep-image-demo-models/chair/";
 
 var getQueryStringParameter = function( parameterName )
 {
@@ -38,6 +37,13 @@ var getQueryStringParameter = function( parameterName )
 
     return parameterValue;
 };
+
+var modelName = getQueryStringParameter("modelId");
+if( !modelName )
+    modelName = "chair";
+
+var ModelBaseUri = "https://paircatalog.blob.core.windows.net/pair-public-catalog/deep-image-demo-models/" + modelName + "/";
+
 
 
 // Invoked when the Pair server responds with the deep image scene info
