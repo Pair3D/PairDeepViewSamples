@@ -240,8 +240,10 @@ pair.Interstitial.prototype = {
      * Set the displayed model via a root URI path. The passed-in path will have "model.obj" appended to find the model and "model.mtl" appended to find the optional material file.
      * @param {string} baseUri - The root URI path to find the model files
      * @param {progressCallback} onLoadProgress - An optional callback that gets invoked while the model's resources are downloaded
+     * @param {string} initialSwatchName - The optional name of the initial swatch value to use
+     * @param {string} fileNameOverride - A optional string that, if provided, is used for file loading, otherwise "model" is used
      */
-    setModelFromBaseUri: function( baseUri, loadProgressCallback, initialSwatchName )
+    setModelFromBaseUri: function( baseUri, loadProgressCallback, initialSwatchName, fileNameOverride )
     {
         if( this.showLoadingBox )
         {
@@ -330,7 +332,7 @@ pair.Interstitial.prototype = {
                 loadProgressCallback( percentDown );
         }
 
-        pair.loadModelFromBaseUri( baseUri, this.mtlLoader, this.objLoader, onMeshLoaded, loadProgress, initialSwatchName );
+        pair.loadModelFromBaseUri( baseUri, this.mtlLoader, this.objLoader, onMeshLoaded, loadProgress, initialSwatchName, fileNameOverride );
     },
 
 

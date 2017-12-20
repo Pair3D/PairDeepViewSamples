@@ -1275,8 +1275,10 @@ pair.DeepImageViewer.prototype = {
      * Add a model to the scene via a root URI path. The passed-in path will have "model.obj" appended to find the model and "model.mtl" appended to find the optional material file.
      * @param {string} baseUri - The root URI path to find the model files
      * @param {modelAddedCallback} onModelAddedCallback - An optional callback that gets invoked after the model is loaded and added to the scene.
+     * @param {string} swatchName - The optional name of the intial swatch value to use.
+     * @param {string} fileNameOverride - A optional string that, if provided, is used for file loading, otherwise "model" is used
      */
-    addModelFromBaseUri: function( baseUri, onModelAddedCallback, swatchName )
+    addModelFromBaseUri: function( baseUri, onModelAddedCallback, swatchName, fileNameOverride )
     {
         var innerThis = this;
         var onMeshLoaded = function( newMesh )
@@ -1334,7 +1336,7 @@ pair.DeepImageViewer.prototype = {
         };
 
         var loadProgressCallback = null
-        pair.loadModelFromBaseUri( baseUri, this.mtlLoader, this.objLoader, onMeshLoaded, loadProgressCallback, swatchName );
+        pair.loadModelFromBaseUri( baseUri, this.mtlLoader, this.objLoader, onMeshLoaded, loadProgressCallback, swatchName, fileNameOverride );
     },
 
 

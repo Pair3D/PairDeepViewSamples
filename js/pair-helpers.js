@@ -3,6 +3,19 @@ var pair = pair || {};
 
 
 /**
+ * Determine if an string is null or empty
+ * @param {string} str - The string to test
+ */
+pair.isNullOrWhitespace = function( str )
+{
+    if( !str || typeof ( str ) !== "string" )
+        return true;
+
+    return str.replace( /\s/g, '' ).length < 1
+};
+
+
+/**
  * Determine if a string ends with another
  * @param {string} testString - The string to test for ending
  * @param {string} testSuffix - The ending to use for testing if testString ends with this value
@@ -297,8 +310,10 @@ pair.loadModelInfo = function( infoUri, onLoaded )
  * Load a model from a URI path. Uses the in-memory cache if the OBJ and MTL data is found
  * @param {modelAddedCallback} onMeshLoaded - An optional callback that gets invoked after the model is loaded
  * @param {progressCallback} onLoadProgress - An optional callback that gets invoked while the model's resources are downloaded
+ * @param {string} initialSwatchName - The optional name of the initial swatch value to use
+ * @param {string} fileNameOverride - A optional string that, if provided, is used for file loading, otherwise "model" is used
  */
-pair.loadModelFromBaseUri = function(baseUri, mtlLoader, objLoader, onMeshLoaded, onLoadProgress, initialSwatchName)
+pair.loadModelFromBaseUri = function(baseUri, mtlLoader, objLoader, onMeshLoaded, onLoadProgress, initialSwatchName, fileNameOverride)
 {
 	// Make sure there's a trailing slash on the URI
     if( !pair.endsWith( baseUri, "/" ) )
@@ -327,7 +342,7 @@ pair.loadModelFromBaseUri = function(baseUri, mtlLoader, objLoader, onMeshLoaded
         };
 
         // Load the mesh data
-        var modelUri = baseUri + "model.obj";
+        var modelUri = baseUri + (pair.isNullOrWhitespace(fileNameOverride) ? "model" : fileNameOverride) + ".obj";
         objLoader.load( modelUri, function( newMesh )
         {
             if( onLoadProgress )
@@ -458,9 +473,11 @@ pair.loadModelFromBaseUri = function(baseUri, mtlLoader, objLoader, onMeshLoaded
         if( onLoadProgress )
             onLoadProgress( 0.1 );
 
+        var modelFileName = (pair.isNullOrWhitespace(fileNameOverride) ? "model" : fileNameOverride) + ".mtl";
+
         // Load the material information
         mtlLoader.setPath( baseUri );
-        mtlLoader.load( "model.mtl", function( materials )
+        mtlLoader.load( modelFileName, function( materials )
         {
             // The material loaded
             onMaterialLoaded( materials, modelInfo );
@@ -483,11 +500,18 @@ if( typeof(THREE) !== "undefined" && THREE.Cache )
     THREE.Cache.enabled = true;
 
 
-pair.preloadModelFromBaseUri = function(baseUri, onLoadProgress, initialSwatchName)
+/**
+ * Preload a model resource from a URI path so it's cached locally when it's loaded for rendering. Uses the in-memory cache if the OBJ and MTL data is found.
+ * @param {string} baseUri - The route path of the 3D model file resources
+ * @param {progressCallback} onLoadProgress - An optional callback that gets invoked while the model's resources are downloaded
+ * @param {string} initialSwatchName - The optional name of the initial swatch value to use
+ * @param {string} fileNameOverride - A optional string that, if provided, is used for file loading, otherwise "model" is used
+ */
+pair.preloadModelFromBaseUri = function(baseUri, onLoadProgress, initialSwatchName, fileNameOverride)
 {
     var objLoader = new THREE.PairOBJLoader();
     var mtlLoader = new THREE.PairMTLLoader();
     mtlLoader.setCrossOrigin( true );
     
-    pair.loadModelFromBaseUri(baseUri, mtlLoader, objLoader, null, onLoadProgress, initialSwatchName);
+    pair.loadModelFromBaseUri(baseUri, mtlLoader, objLoader, null, onLoadProgress, initialSwatchName, fileNameOverride);
 };
