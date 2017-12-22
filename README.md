@@ -8,4 +8,4 @@ Host the repo's root directory with any local webserver and load up index.html. 
 
 # Integrating the Full Flow on Your Site
 
-Examine the "visualizer-demo-from-server.html" file to see an example of the full user-experience flow. Before testing you'll need to reach out to us to request an API key. Once you have the API key, enter into the text box, and proceed with the user flow. A more robust sample will be put up soon.
+Examine the "visualizer-demo-from-server.html" file to see an example of the full user-experience flow. Before testing you'll need to [reach out to us](https://www.pair3d.com/contact-us) to request an API key. Once you have the API key, enter into the text box, and proceed with the user flow. A more robust sample will be put up soon.
